@@ -39,17 +39,6 @@ public class AppConfig implements WebMvcConfigurer {
     private Environment env;
 
     @Bean
-    public ViewResolver viewResolver() {
-
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-
-        viewResolver.setPrefix("/WEB-INF/view/");
-        viewResolver.setSuffix(".jsp");
-
-        return viewResolver;
-    }
-
-    @Bean
     public DataSource myDataSource() {
 
         ComboPooledDataSource myDataSource = new ComboPooledDataSource();
@@ -103,12 +92,6 @@ public class AppConfig implements WebMvcConfigurer {
         txManager.setSessionFactory(sessionFactory);
 
         return txManager;
-    }
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**")
-                .addResourceLocations("/resources/");
     }
 
     private int getIntProperty(String propName) {
