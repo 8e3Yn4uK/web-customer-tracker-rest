@@ -1,6 +1,6 @@
 package com.service;
 
-import com.dao.CustomerDAO;
+import com.dao.ICustomerDAO;
 import com.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,11 +13,11 @@ import java.util.List;
  */
 
 @Service
-public class CustomerServiceImpl implements ICustomerService {
+public class CustomerService implements ICustomerService {
 
     // injecting customer DAO
     @Autowired
-    private CustomerDAO customerDAO;
+    private ICustomerDAO customerDAO;
 
     @Override
     @Transactional
