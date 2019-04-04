@@ -1,4 +1,4 @@
-package com.controller;
+package com.rest;
 
 import com.entity.Customer;
 import com.service.ICustomerService;
