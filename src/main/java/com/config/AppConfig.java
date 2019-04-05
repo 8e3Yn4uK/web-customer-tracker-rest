@@ -30,7 +30,7 @@ import java.util.logging.Logger;
 @EnableWebMvc
 @EnableTransactionManagement
 @ComponentScan("com")
-@PropertySource("classpath:persistence-mysql.properties")
+@PropertySource({"classpath:persistence-mysql.properties", "classpath:security-persistence-mysql.properties"})
 public class AppConfig implements WebMvcConfigurer {
 
     private Logger logger = Logger.getLogger(getClass().getName());
@@ -93,6 +93,33 @@ public class AppConfig implements WebMvcConfigurer {
 
         return txManager;
     }
+
+    @Bean
+    public DataSource securityDataSource() {
+
+        ComboPooledDataSource securityDataSource = new ComboPooledDataSource();
+
+        try {
+            securityDataSource.setDriverClass(env.getProperty("security.jdbc.driver"));
+        } catch (PropertyVetoException exc) {
+            throw new RuntimeException(exc);
+        }
+
+        logger.info(">>> security.jdbc.url: " + env.getProperty("security.jdbc.url"));
+        logger.info(">>> security.jdbc.user: " + env.getProperty("security.jdbc.user"));
+
+        securityDataSource.setJdbcUrl(env.getProperty("security.jdbc.url"));
+        securityDataSource.setUser(env.getProperty("security.jdbc.user"));
+        securityDataSource.setPassword(env.getProperty("security.jdbc.password"));
+
+        securityDataSource.setInitialPoolSize(getIntProperty("security.connection.pool.initialPoolSize"));
+        securityDataSource.setMinPoolSize(getIntProperty("security.connection.pool.minPoolSize"));
+        securityDataSource.setMaxPoolSize(getIntProperty("security.connection.pool.maxPoolSize"));
+        securityDataSource.setMaxIdleTime(getIntProperty("security.connection.pool.maxIdleTime"));
+
+        return securityDataSource;
+    }
+
 
     private int getIntProperty(String propName) {
 
