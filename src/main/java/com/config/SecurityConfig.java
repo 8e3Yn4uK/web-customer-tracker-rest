@@ -51,28 +51,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     1. Delete a customer.  DELETE /api/customers/{customerId}
            */
 
-
-//        http.authorizeRequests()
-//                .antMatchers(HttpMethod.GET, "api/customers").hasRole("USER")
-//                .antMatchers(HttpMethod.GET, "api/customers/**").hasRole("USER")
-//                .antMatchers(HttpMethod.POST, "api/customers/**").hasRole("USER")
-//                .antMatchers(HttpMethod.POST, "api/customers").hasAnyRole("MANAGER", "ADMIN")
-//                .antMatchers(HttpMethod.PUT, "api/customers").hasAnyRole("MANAGER", "ADMIN")
-//                .antMatchers(HttpMethod.DELETE, "/api/customers/**").hasRole("ADMIN")
-//                .and()
-//                .httpBasic()
-//                .and()
-//                .csrf().disable()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/customers").hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/api/customers/**").hasRole("USER")
                 .antMatchers(HttpMethod.POST, "/api/customers").hasAnyRole("MANAGER", "ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/customers/**").hasAnyRole("MANAGER", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/customers/**").hasRole("USER")
                 .antMatchers(HttpMethod.PUT, "/api/customers").hasAnyRole("MANAGER", "ADMIN")
-                .antMatchers(HttpMethod.PUT, "/api/customers/**").hasAnyRole("MANAGER", "ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/api/customers/**").hasRole("ADMIN")
+
                 .and()
                 .httpBasic()
                 .and()
